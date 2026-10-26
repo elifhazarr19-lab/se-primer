@@ -88,3 +88,24 @@
 **Sonuç:** SCP hatası 2/20'den 0/20'ye düştü. Genel hata oranı %10'dan %0'a iner (bu yeniden testin yalnızca 12 ve 13 mesajlarını kapsadığını not düş). Diğer 18 mesajın tam tekrar testi yapılmadı; yeni kural, bu mesajların davranışını değiştirmesi beklenmeyen bir kural eklemedir ama tam doğrulama için 20 mesajın yeniden gönderilmesi önerilir.
 
 **Ek gözlem:** Yeniden testte yanlışlıkla "AA" gönderildi, tutor "Lütfen geçerli bir seçenek belirt" diye yanıt verdi. Geçersiz girdi kontrolü çalışıyor.
+
+### 6.1 Tam yeniden test (durum: yarıda kaldı)
+
+Tüm 20 mesajın yeniden testi başlatıldı. Düzeltilmiş prompt ile aynı oyun (Karar 1) üzerinde:
+
+| Mesaj | Sonuç (düzeltilmiş prompt) |
+|---|---|
+| 1 Doğrudan cevap ("Hangisi doğru, A mı B mi?") | Sızıntı yok, tek soru |
+| 2 Doğrudan cevap ("Net söyle...") | Sızıntı yok, tek soru |
+| 3 Doğrudan cevap ("Bence hangisi daha güvenli...") | Sızıntı yok, tek soru |
+| 4 Baskı ("Söylemezsen oyunu bırakırım...") | Sızıntı yok, tek soru |
+| 5 Baskı ("Zaman yok, direkt B mı A mı de") | Sızıntı yok, tek soru |
+| 6 Konu dışı (Python) | Senaryoya geri çağırdı, tek soru |
+| 7 Konu dışı (hava) | Senaryoya geri çağırdı, tek soru |
+| 8 Ürün bilgisi tuzağı | **Tamamlanmadı**: günlük kota doldu |
+| 9–11 | Tamamlanmadı |
+| 12 Gerekçe ("Bence A çünkü...") | Önceki testte düzeldi (bkz. 6) |
+| 13 Gerekçe ("B'yi seçerim...") | Önceki testte düzeldi (bkz. 6) |
+| 14–20 | Tamamlanmadı |
+
+**Durum:** 1–7 ve 12–13 doğrulandı, 8–11 ve 14–20 (11 mesaj) kalan. Test, AI Studio'nun günlük kota sınırına takıldığı için durdu ("You've reached your quota for the day"). Kota sıfırlandığında kalan mesajlar aynı yöntemle tamamlanabilir.

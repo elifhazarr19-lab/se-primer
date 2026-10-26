@@ -1,0 +1,13 @@
+{
+  "name": "se-primer",
+  "version": "0.1.0",
+  "private": true,
+  "description": "SE Primer: YZM301 Ödev 1 - Yazılım kriz simülasyonu ve testleri",
+  "scripts": {
+    "test": "cypress run",
+    "test:open": "cypress open"
+  },
+  "devDependencies": {
+    "cypress": "^13.17.0"
+  }
+}

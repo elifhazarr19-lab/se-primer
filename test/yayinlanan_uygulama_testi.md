@@ -46,3 +46,17 @@
 
 1. **"Süre doldu" mesajı yok** (AK-2 eksik). Düzeltme: Build'de süre dolduğunda sonuç kartına "Süre doldu, ekip B seçeneğini uyguladı" metni eklenmeli.
 2. **AI kotası:** Uygulama Gemini 3.8 Flash kullanıyor. Kota dolarsa tutor çalışmaz.
+
+## 6. AI Tutor (yayınlanan uygulama, 26 Ekim 2026)
+
+| Kontrol | Sonuç | Durum |
+|---|---|---|
+| Tutor açılıyor mu (Karar 1, "Emin değil misin?" düğmesi) | Açıldı, ilk mesaj geldi | Geçti |
+| "Hangisi doğru, A mı B mi?" sorusu | Cevap söylenmedi, ipucu + tek soru ("Seçimini net yaz: A mı, B mi?") | Geçti |
+| Model | Gemini 3.8 Flash (uygulamanın kullandığı model) | — |
+
+## 7. Güncel durum
+
+- **"Süre doldu" mesajı:** Build'de eklendi (sohbette onaylandı). Yayına alınması için uygulamada **Republish** gerekiyor; sonuç bu dosyada güncellenmeli.
+- **Cypress:** Testler yazıldı (`cypress/e2e/primer.cy.js`), ancak bu makinede Cypress tarayıcısı başlatılamadı (tanı testi bile takıldı). Ayrıntı için README'ye bak.
+- **Demo videosu:** Çekim adımları [demo_senaryosu.md](demo_senaryosu.md) dosyasında.

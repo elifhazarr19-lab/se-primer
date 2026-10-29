@@ -38,9 +38,9 @@
 
 ## 4. Test edilmeyenler
 
-- "Emin değil misin? Sokratik AI Tutor'a danış" düğmesi ve tutor yanıtları (yayınlanmış uygulamada).
-- "Sistem çöktü" varyantları (K1=B ve K2=B).
-- Kayıtlı yeniden oynama davranışı (Yeniden Oyna düğmesi çalıştı, ama ayrıntılı kontrol yapılmadı).
+- Kayıtlı yeniden oynama davranışı: "Yeniden Oyna" düğmesine basıldığında oyunun sıfırlanıp sıfırlanmadığı ayrıca test edilmedi. Cypress yalnızca son ekranda düğmenin göründüğünü kontrol ediyor.
+
+Not: Tutor (bölüm 6, 6.1) ve "Sistem çöktü" yolları (Cypress: K1=B, K2=B) artık test edildi.
 
 ## 5. Bilinen sorunlar
 

@@ -14,10 +14,10 @@ const KRIZE_GEC = () => {
   cy.contains('button', 'Müdahaleyi Başlat').click();
 };
 
-const SECIM_YAP = (metin) => {
+const SECIM_YAP = (metin, sonrakiButon = 'Sonraki Karara Geç') => {
   cy.contains(metin).click();
-  // 3 saniyelik "Geri Al" bandı dolana kadar bekle
-  cy.contains('Sonraki Karara Geç', { timeout: 10000 }).should('be.visible');
+  // 3 saniyelik "Geri Al" bandı dolana kadar bekle (son karardan sonra buton farklı)
+  cy.contains(sonrakiButon, { timeout: 10000 }).should('be.visible');
 };
 
 describe('SE Primer: iyi son (A, A, A)', () => {
@@ -35,7 +35,7 @@ describe('SE Primer: iyi son (A, A, A)', () => {
     cy.contains('button', 'Sonraki Karara Geç').click();
 
     cy.contains('Hasta adlarını maskele').should('be.visible'); // Karar 3
-    SECIM_YAP('Hasta adlarını maskele');
+    SECIM_YAP('Hasta adlarını maskele', 'Kriz Sonuç Raporunu Gör');
     cy.contains('button', 'Kriz Sonuç Raporunu Gör').click();
 
     cy.contains('Kusursuz Müdahale: Sistem Ayakta').should('be.visible');
@@ -55,7 +55,7 @@ describe('SE Primer: kötü son (A, A, B)', () => {
     SECIM_YAP('Önce kısa test koş');
     cy.contains('button', 'Sonraki Karara Geç').click();
 
-    SECIM_YAP('Logu ekibe olduğu gibi at');
+    SECIM_YAP('Logu ekibe olduğu gibi at', 'Kriz Sonuç Raporunu Gör');
     cy.contains('button', 'Kriz Sonuç Raporunu Gör').click();
 
     cy.contains('Sistem Ayakta Ama KVKK İhlali').should('be.visible');
@@ -71,11 +71,12 @@ describe('SE Primer: Deneyimliyim (süre yolu)', () => {
     cy.contains('Karar Sayacı').should('be.visible');
     cy.contains('Nöbetçi İpucu').should('not.exist');
 
-    // Cevap vermeden süre dolmasını bekle
-    cy.contains('Canlıda yama yap', { timeout: 70000 }).should('be.visible');
+    // Cevap vermeden süre dolmasını bekle; süre dolunca B otomatik uygulanır
+    cy.contains('Sonraki Karara Geç', { timeout: 75000 }).should('be.visible');
+    cy.contains('Canlıda yama yap').should('be.visible');
     cy.contains('Sistem Askıda').should('be.visible');
 
-    // BİLİNEN EKSİK (AK-2): "Süre doldu" mesajı gösterilmiyor
-    cy.contains('Süre doldu', { timeout: 2000 }).should('be.visible');
+    // AK-2: "Süre doldu" mesajı Build'de eklendi ama canlıya henüz yansımadı (Republish gerekli)
+    cy.contains('Süre doldu').should('be.visible');
   });
 });

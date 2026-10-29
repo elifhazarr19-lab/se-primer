@@ -12,7 +12,7 @@ SE Primer, sağlık sektöründe geçen bir kriz senaryosunu (sabah 08:00'de ç�
 - **Tutor sistem promptu:** [system_prompt.md](system_prompt.md)
 - **Tutor değerlendirmesi:** [eval/](eval/)
 - **Yayın testi:** [test/yayinlanan_uygulama_testi.md](test/yayinlanan_uygulama_testi.md)
-- **Demo videosu:** _henüz eklenmedi_
+- **Demo videosu (56 sn):** [test/demo.mp4](test/demo.mp4)
 
 ## Mimari
 

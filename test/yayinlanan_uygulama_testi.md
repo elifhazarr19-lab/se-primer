@@ -1,7 +1,7 @@
 # Yayınlanan Uygulama Testi (manuel, tarayıcı)
 
 > Link: https://se-primer-1-282987152472.europe-west2.run.app/
-> Tarih: 26 Ekim 2026 · Ekran: masaüstü tarayıcı, telefon genişliğinde pencere
+> Tarih: 26 Ekim 2026 · Güncellendi: 29 Ekim 2026 (Süre doldu mesajı ve Cypress sonucu) · Ekran: masaüstü tarayıcı, telefon genişliğinde pencere
 > Kapsam: Spec §4 ve §5 (AK-1 … AK-5)
 
 ## 1. Seviye: Yeni başladım (iyi son yolu)
@@ -32,7 +32,7 @@
 | 60 saniyelik sayaç görünüyor mu (AK-2) | "Karar Sayacı (Deneyimli)" 60 sn'den geri sayıyor | Geçti |
 | İpucu kapalı mı | Karar ekranında ipucu kutusu yok | Geçti |
 | Süre dolunca B uygulanıyor mu | Karar 1'e cevap verilmedi; B ("Canlıda yama yap") otomatik uygulandı, sonuç ekranı açıldı | Geçti |
-| "Süre doldu" mesajı gösteriliyor mu (AK-2) | Sonuç ekranında mesaj görünmedi | **Eksik** |
+| "Süre doldu" mesajı gösteriliyor mu (AK-2) | Republish sonrası görünüyor: "Süre doldu. Ekip B seçeneğini uyguladı." | Geçti |
 | Süre içinde verilen seçimler | Karar 2 (A), Karar 3 (A) | Geçti |
 | Son | K1: B, K2: A, K3: A → "Kusursuz Müdahale: Sistem Ayakta, Veri Güvende!" | Geçti (spec kuralıyla uyumlu) |
 
@@ -44,7 +44,7 @@
 
 ## 5. Bilinen sorunlar
 
-1. **"Süre doldu" mesajı yok** (AK-2 eksik). Düzeltme: Build'de süre dolduğunda sonuç kartına "Süre doldu, ekip B seçeneğini uyguladı" metni eklenmeli.
+1. **"Süre doldu" mesajı (AK-2): çözüldü.** Build'e eklendi, Republish sonrası canlı sürümde görünüyor ve Cypress testi bunu doğruluyor.
 2. **AI kotası:** Uygulama Gemini 3.8 Flash kullanıyor. Kota dolarsa tutor çalışmaz.
 
 ## 6. AI Tutor (yayınlanan uygulama, 26 Ekim 2026)
@@ -55,8 +55,11 @@
 | "Hangisi doğru, A mı B mi?" sorusu | Cevap söylenmedi, ipucu + tek soru ("Seçimini net yaz: A mı, B mi?") | Geçti |
 | Model | Gemini 3.8 Flash (uygulamanın kullandığı model) | — |
 
-## 7. Güncel durum
+## 7. Güncel durum (29 Ekim 2026)
 
-- **"Süre doldu" mesajı:** Build'de eklendi (sohbette onaylandı). Yayına alınması için uygulamada **Republish** gerekiyor; sonuç bu dosyada güncellenmeli.
-- **Cypress:** Testler yazıldı (`cypress/e2e/primer.cy.js`), ancak bu makinede Cypress tarayıcısı başlatılamadı (tanı testi bile takıldı). Ayrıntı için README'ye bak.
-- **Demo videosu:** Çekim adımları [demo_senaryosu.md](demo_senaryosu.md) dosyasında.
+- **"Süre doldu" mesajı:** Yayında. Canlı sitenin kodunda metin var ve Deneyimliyim sonuç kartında görünüyor.
+- **Cypress (Node 22.23.4, Chrome 156, Cypress 13.17.0):** 3 testten 3'ü geçiyor. Test dosyası: `cypress/e2e/primer.cy.js`.
+  - İyi son (A, A, A): geçti
+  - Kötü son (A, A, B): geçti
+  - Deneyimliyim, süre dolumu: geçti (yaklaşık 64 sn)
+- **Demo videosu:** [test/demo.mp4](demo.mp4), 56 sn. Akış [demo_senaryosu.md](demo_senaryosu.md) ile aynı. Kayıt Cypress ile 390x844 ekranda alındı, telefon kaydı değil.

@@ -34,7 +34,7 @@ Testler [Cypress](https://www.cypress.io/) ile yazıldı: [cypress/e2e/primer.cy
 
 ## Çalıştırma
 
-Testler için Node.js (v18+) gerekir.
+Testler için Node.js 22 kullanıldı (Node 24 ile Cypress çalışma sırasında takılıyor).
 
 ```bash
 npm install
@@ -49,6 +49,10 @@ BASE_URL=https://se-primer-1-282987152472.europe-west2.run.app npm test
 
 Videolar `cypress/videos/` klasörüne kaydedilir.
 
+**Windows notu:** Proje yolunda ASCII olmayan karakter (ör. `İ`) varsa Cypress takılabiliyor. Bu durumda projeyi `C:\se-primer` gibi ASCII bir yola kopyalayıp orada çalıştırın. Testler Chrome ile çalıştırıldığında `npm test -- --browser chrome` kullanılabilir.
+
+**Son sonuç:** 3 testten 3'ü geçti (Node 22.23.4, Chrome 156, Cypress 13.17.0). Test süresi yaklaşık 1,5 dakika.
+
 ## Yapılmayan üç özellik
 
 1. **Kullanıcı hesabı ve giriş:** Kişisel veri saklama, KVKK yükümlülüğü ve güvenlik sorumluluğu getirdiği için eğitim senaryosu için gerekli değil.
@@ -57,7 +61,6 @@ Videolar `cypress/videos/` klasörüne kaydedilir.
 
 ## Bilinen sınırlar
 
-- **Süre mesajı eksik:** Deneyimliyim modunda süre dolunca B otomatik uygulanıyor, ancak sonuç ekranında "Süre doldu" mesajı görünmüyor (AK-2 eksik).
 - **AI kotası:** Uygulama Gemini modelini kullanıyor. Günlük kota dolarsa tutor yanıt veremez.
 - **Tutor testi:** Yayınlanan uygulamada tutor sohbetinin ayrıntılı testi henüz yapılmadı. Eval, AI Studio playground'da yapıldı.
 - **Süre 60 saniye:** AI Studio sohbetinde süre sayılamaz, sayaç uygulama arayüzünde tutuluyor.

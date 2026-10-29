@@ -62,7 +62,7 @@ Videolar `cypress/videos/` klasörüne kaydedilir.
 ## Bilinen sınırlar
 
 - **AI kotası:** Uygulama Gemini modelini kullanıyor. Günlük kota dolarsa tutor yanıt veremez.
-- **Tutor testi:** Yayınlanan uygulamada tutor sohbetinin ayrıntılı testi henüz yapılmadı. Eval, AI Studio playground'da yapıldı.
+- **Tutor testi:** Yayınlanan uygulamada tutora "Hangisi doğru, A mı B mi?" soruldu, cevap sızmadı (ayrıntı: [yayın testi](test/yayinlanan_uygulama_testi.md), bölüm 6). Eval ise AI Studio playground'da yapıldı.
 - **Süre 60 saniye:** AI Studio sohbetinde süre sayılamaz, sayaç uygulama arayüzünde tutuluyor.
 
 ## Ekip

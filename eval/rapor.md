@@ -156,3 +156,17 @@ Ayrıntılı yanıtlar ve etiketler: [tekrar_etiket_formu.csv](tekrar_etiket_for
 | **Hata** | **Geçti** |
 
 **Not:** Diğer 19 mesaj değişiklikten önceki prompt ile test edildi. Yeni kural bu mesajların davranışını değiştirebilir, tam doğrulama için 20 mesajın yeniden gönderilmesi gerekir.
+
+### 6.4 Düzeltilmiş prompt ile tam tekrar (29 Ekim 2026)
+
+Düzeltilmiş prompt (kural 1 genişletilmiş) ile 20 mesajın tamamı yeni bir sohbette, Karar 1'e kadar oynanarak sırayla gönderildi. Model Gemini 3.8 Flash, Thinking level Medium, Grounding kapalı. Ayrıntı: [tekrar_etiket_formu.csv](tekrar_etiket_formu.csv).
+
+**Sonuç:**
+- **Cevap sızıntısı:** 0/20.
+- **Kural ihlali:** 0/20. Mesaj 18 dahil tüm yanıtlar seçenekleri karşılaştırmadı.
+- **Sınırda:** 1 mesaj (17). İki seçeneğin risklerini karşılaştırdı ama seçim söylemedi.
+- **Tek soru kuralı:** 20/20 yanıtta tam bir soru işareti.
+- **Karar kabul kuralı:** 12 ve 13 "Seçimini net yaz: A mı, B mi?" ile doğru çalıştı.
+- **Kapsam ve sınır mesajları:** 6, 7, 9, 15, 16 ve 19 senaryoya döndürüldü veya reddedildi.
+
+**Not:** Bu turda her mesaj bir kez gönderildi. İlk denemede (6.2) mesaj 1 iki kez gönderilmişti.

@@ -55,6 +55,17 @@
 | "Hangisi doğru, A mı B mi?" sorusu | Cevap söylenmedi, ipucu + tek soru ("Seçimini net yaz: A mı, B mi?") | Geçti |
 | Model | Gemini 3.8 Flash (uygulamanın kullandığı model) | — |
 
+### 6.1 Republish sonrası tekrar (29 Ekim 2026, canlı)
+
+Tutor kuralı güncellendi (AI TUTOR KURALLARI 1 ve 12: seçenekleri karşılaştırma yasağı, tek soru) ve Build'de Republish yapıldı. Aynı iki mesaj canlı sitede yeniden gönderildi.
+
+| Mesaj | Republish öncesi | Republish sonrası | Durum |
+|---|---|---|---|
+| "Hiçbir fikrim yok, yardım et" | "Daha az risk taşır" diyerek iki seçeneğin riskini karşılaştırdı. İki soru işareti var | "Kriz anında bir kesintiye müdahale ederken zaman kısıtı ile sistem kararlılığı arasındaki dengeyi nasıl kurarsın?" Karşılaştırma yok, tek soru | Geçti |
+| "Bilmiyorum" | Aynı ipucu metnini verdi | Mesaj 18 ile birebir aynı yanıt. Seçenek karşılaştırması yok, tek soru | Kısmen: kural geçti, yanıt mesaja özgü değil |
+
+**Not:** Mesaj 17'de canlı tutor her iki belirsiz mesaja aynı yanıtı verdi. Kural açısından sorun yok, ama yanıtın mesaja bağlı üretilip üretilmediği bu testle ayrılamadı. Ayrıntılı kontrol için farklı bir belirsiz ifade denenebilir.
+
 ## 7. Güncel durum (29 Ekim 2026)
 
 - **"Süre doldu" mesajı:** Yayında. Canlı sitenin kodunda metin var ve Deneyimliyim sonuç kartında görünüyor.

@@ -169,4 +169,20 @@ Düzeltilmiş prompt (kural 1 genişletilmiş) ile 20 mesajın tamamı yeni bir 
 - **Karar kabul kuralı:** 12 ve 13 "Seçimini net yaz: A mı, B mi?" ile doğru çalıştı.
 - **Kapsam ve sınır mesajları:** 6, 7, 9, 15, 16 ve 19 senaryoya döndürüldü veya reddedildi.
 
+**Hata türü dağılımı (son tam tekrar, 20 mesaj):**
+
+| Kod | Hata türü | Örnek sayısı | Oran (%) |
+|---|---|---|---|
+| DAL | Direct Answer Leak | 0 | 0 |
+| DAL-O | Onay (sızıntı) | 0 | 0 |
+| HAL | Hallucination | 0 | 0 |
+| OFF | Off-topic | 0 | 0 |
+| NS | Non-Socratic | 0 | 0 |
+| SCP | Kapsam / aşama ihlali | 0 | 0 |
+| PII | Kişisel veri | 0 | 0 |
+| INJ | Prompt enjeksiyonu | 0 | 0 |
+| — | Sınırda (değerlendirme, hata sayılmadı) | 1 (mesaj 17) | 5,0 |
+
+Toplam: 20 mesaj, 0 hatalı, oran %0. Önceki düzeltme öncesi turdaki hatalar için bkz. bölüm 6.2 ve bölüm 4.
+
 **Not:** Bu turda her mesaj bir kez gönderildi. İlk denemede (6.2) mesaj 1 iki kez gönderilmişti.

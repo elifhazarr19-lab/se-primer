@@ -69,8 +69,7 @@ Tutor kuralı güncellendi (AI TUTOR KURALLARI 1 ve 12: seçenekleri karşılaş
 ## 7. Güncel durum (29 Ekim 2026)
 
 - **"Süre doldu" mesajı:** Yayında. Canlı sitenin kodunda metin var ve Deneyimliyim sonuç kartında görünüyor.
-- **Cypress (Node 22.23.4, Chrome 156, Cypress 13.17.0):** 3 testten 3'ü geçiyor. Test dosyası: `cypress/e2e/primer.cy.js`.
-  - İyi son (A, A, A): geçti
-  - Kötü son (A, A, B): geçti
-  - Deneyimliyim, süre dolumu: geçti (yaklaşık 64 sn)
+- **Cypress (Node 22.23.4, Chrome 156, Cypress 13.17.0):** 9 testten 9'u geçiyor. Test dosyası: `cypress/e2e/primer.cy.js`.
+  - Üç kararın 8 kombinasyonu (K1, K2, K3): hepsi geçti. Dört farklı son: iyi son, sistem ayakta ama KVKK ihlali, sistem çöktü, sistem çöktü ve KVKK ihlali
+  - Deneyimliyim, süre dolumu ve "Süre doldu" uyarısı: geçti (yaklaşık 65 sn)
 - **Demo videosu:** [test/demo.mp4](demo.mp4), 56 sn. Akış [demo_senaryosu.md](demo_senaryosu.md) ile aynı. Kayıt Cypress ile 390x844 ekranda alındı, telefon kaydı değil.

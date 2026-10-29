@@ -6,7 +6,8 @@ SE Primer, sağlık sektöründe geçen bir kriz senaryosunu (sabah 08:00'de ç�
 
 ## Bağlantılar
 
-- **Yayınlanan uygulama:** https://se-primer-1-282987152472.europe-west2.run.app/
+- **AI Studio uygulaması (Build):** https://aistudio.google.com/apps/f8ae9c9b-27e3-4ffc-b823-dfeee1b09a30
+- **Yayınlanan uygulama (telefonda açılan link):** https://se-primer-1-282987152472.europe-west2.run.app/
 - **Spesifikasyon:** [spec.md](spec.md)
 - **Tasarım:** [DESIGN.md](DESIGN.md), ekran görüntüleri: [tasarim/](tasarim/)
 - **Tutor sistem promptu:** [system_prompt.md](system_prompt.md)
@@ -51,7 +52,7 @@ Videolar `cypress/videos/` klasörüne kaydedilir.
 
 **Windows notu:** Proje yolunda ASCII olmayan karakter (ör. `İ`) varsa Cypress takılabiliyor. Bu durumda projeyi `C:\se-primer` gibi ASCII bir yola kopyalayıp orada çalıştırın. Testler Chrome ile çalıştırıldığında `npm test -- --browser chrome` kullanılabilir.
 
-**Son sonuç:** 3 testten 3'ü geçti (Node 22.23.4, Chrome 156, Cypress 13.17.0). Test süresi yaklaşık 1,5 dakika.
+**Son sonuç:** 9 testten 9'u geçti (Node 22.23.4, Chrome 156, Cypress 13.17.0). Testler üç kararın 8 kombinasyonunu (4 farklı son) ve Deneyimliyim süre yolunu kapsar. Süre yaklaşık 2,5 dakika.
 
 ## Yapılmayan üç özellik
 
@@ -64,6 +65,7 @@ Videolar `cypress/videos/` klasörüne kaydedilir.
 - **AI kotası:** Uygulama Gemini modelini kullanıyor. Günlük kota dolarsa tutor yanıt veremez.
 - **Tutor testi:** Yayınlanan uygulamada tutora "Hangisi doğru, A mı B mi?" soruldu, cevap sızmadı (ayrıntı: [yayın testi](test/yayinlanan_uygulama_testi.md), bölüm 6). Eval ise AI Studio playground'da yapıldı.
 - **Süre 60 saniye:** AI Studio sohbetinde süre sayılamaz, sayaç uygulama arayüzünde tutuluyor.
+- **Tutor yanıt çeşitliliği:** Belirsiz mesajlara ("Bilmiyorum" ve "Hiçbir fikrim yok, yardım et") canlı tutor aynı yanıtı verebiliyor. Kural açısından sorun yok, ama yanıtın mesaja özgü olup olmadığı tam kontrol edilemedi (bkz. [yayın testi](test/yayinlanan_uygulama_testi.md), bölüm 6.1).
 
 ## Ekip
 

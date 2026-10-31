@@ -169,3 +169,59 @@ stateDiagram-v2
 - **V7 (serbest tutor sorusu, onaylandı):** Tutora her iki seviyede de yazılabilir. Deneyimliyim'de sayaç durmaz.
 - **V5 (seviye sayısı):** Ödevdeki iki örnek seviye (Yeni başladım, Deneyimliyim) esas alındı. Ara seviye eklenmedi; ekstra yol Cypress kapsamını ve eval kapsamını büyütür, puana katkısı yoktur.
 - **Açık soru:** Rol seçiminin anlatıya etkisinin derinliği Stitch tasarım aşamasında netleşecek.
+
+## 8. Model Kapısı (v2): takılma tahmini
+
+Bu bölüm model gereksinimini, eval metriğini ve kabul eşiğini içerir. Eşik eğitimden **önce** yazıldı. Eşiği geçmeyen model yayınlanmaz.
+
+### 8.1 Amaç
+
+Oyuncu bu karar ekranında takılacak mı? Model, oyuncunun davranışından bu olasılığı tahmin eder. Olasılık eşiği geçerse oyunun davranışı değişir: tutor daha somut bir ipucu verir ve Deneyimliyim modunda 60 saniyelik sayaç kalkar ("Yardım modu").
+
+### 8.2 Girdi (özellikler)
+
+Her özellik karar ekranı açıldığında bilinen bilgilerden hesaplanır. Etiketle sızıntı olmaması için "Geri al" ve tutora yazılan soru özellik olarak kullanılmaz.
+
+| Özellik | Tanım | Birim |
+|---|---|---|
+| `seviye_yeni` | Oyuncu "Yeni başladım" seçtiyse 1, "Deneyimliyim" seçtiyse 0 | 0/1 |
+| `karar_no` | Karar sırası | 1, 2, 3 |
+| `ilk_tiklama_sn` | Karar ekranı açıldıktan sonra ilk seçime kadar geçen süre | saniye |
+| `onceki_yanlis_sayisi` | Önceki kararlarda sistemi çökerten ya da KVKK ihlali yaratan seçim sayısı | adet |
+| `onceki_takildi` | Önceki karar için etiket (takıldı mı) | 0/1 (ilk karar için 0) |
+| `ipucu_sayisi_once` | Bu karardan önce "İpucu iste" düğmesine basılma sayısı | adet |
+
+### 8.3 Etiket (hedef)
+
+`takildi = 1`, o kararda oyuncu "Geri al" kullandıysa **veya** tutora soru yazdıysa. Aksi halde `0`.
+
+### 8.4 Veri
+
+- En az **15 gerçek oturum** (her oturum 3 karar, yani en az 45 satır). Gerçek kişilerden alınır, kayıt anonimdir (ad, e-posta, cihaz kimliği yok).
+- Veri Toplama Modu: uygulama oturum sonunda satırları CSV olarak indirir. `kaynak` sütunu `gercek` ya da `sentetik` olarak işaretlenir.
+- Eğitim için en az 10 pozitif ve 10 negatif satır gerekir. Yoksa `train.py` durur.
+
+### 8.5 Eval metriği ve kabul eşiği (eğitimden önce sabit)
+
+- **Metrik:** 5 katlı tabakalı çapraz doğrulamada ortalama ROC-AUC.
+- **Kabul eşiği:** ortalama ROC-AUC ≥ **0,70**. Ayrıca dengeli doğruluk (balanced accuracy) çoğunluk sınıfı tahmininden (0,50) yüksek olmalı.
+- **Eşdeğerlik:** `model.onnx` ile sklearn arasındaki en büyük olasılık farkı ≤ **1e-4**.
+- **Tarayıcı paritesi:** Python referans olasılığı ile tarayıcıdaki `onnxruntime-web` olasılığı arasındaki fark ≤ **1e-4** (5 referans girdide).
+- **Eşik olasılığı:** `takildi` tahmini ≥ **0,50** ise "Yardım modu" açılır.
+
+### 8.6 Model kabul örnekleri
+
+**AK-6 · Model eşiği geçmezse yayınlanmaz**
+- Verilen: Eğitim betiği çalıştırılır ve ortalama ROC-AUC 0,70'in altında kalır.
+- Ne zaman: `train.py` tamamlanır.
+- O zaman: Betik hata verir, `model/` klasörüne dosya yazılmaz ve yayın adımı çalışmaz.
+
+**AK-7 · Model kararı oyunu değiştirir**
+- Verilen: Oyuncunun `takildi` tahmini ≥ 0,50 olur.
+- Ne zaman: Bir sonraki karar ekranı açılır.
+- O zaman: Tutor, o kararla ilgili somut bir ipucu verir ve Deneyimliyim modunda sayaç görünmez. Tahmin 0,50'nin altındaysa bu değişiklikler olmaz.
+
+**AK-8 · Tarayıcıdaki model Python ile aynı sonucu verir**
+- Verilen: 5 referans girdi (`tests/parite.json`) tarayıcıda ve Python'da çalıştırılır.
+- Ne zaman: Parite testi çalışır.
+- O zaman: Her girdi için olasılık farkı ≤ 1e-4 olur.

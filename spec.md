@@ -1,4 +1,4 @@
-# SE Primer: spec.md
+﻿# SE Primer: spec.md
 
 > Sürüm 0.2 · Tarih: 26 Ekim 2026 · Durum: Onaylandı (geri al bandı ve serbest tutor sorusu eklendi)
 > YZM301 Yazılım Gerçekleme ve Test · Ödev 1 · Adım 1 / 6
@@ -178,22 +178,28 @@ Bu bölüm model gereksinimini, eval metriğini ve kabul eşiğini içerir. Eşi
 
 Oyuncu bu karar ekranında takılacak mı? Model, oyuncunun davranışından bu olasılığı tahmin eder. Olasılık eşiği geçerse oyunun davranışı değişir: tutor daha somut bir ipucu verir ve Deneyimliyim modunda 60 saniyelik sayaç kalkar ("Yardım modu").
 
-### 8.2 Girdi (özellikler)
+### 8.2 Girdi (özellikler) ve veri sütunları
 
-Her özellik karar ekranı açıldığında bilinen bilgilerden hesaplanır. Etiketle sızıntı olmaması için "Geri al" ve tutora yazılan soru özellik olarak kullanılmaz.
+Veri dosyası `data/oturumlar.csv` aşağıdaki sütunları taşır. Her satır bir karar ekranıdır. Ödev şablonundaki sütun adları korunmuştur.
 
-| Özellik | Tanım | Birim |
+| Sütun | Tanım | Birim / değer |
 |---|---|---|
-| `seviye_yeni` | Oyuncu "Yeni başladım" seçtiyse 1, "Deneyimliyim" seçtiyse 0 | 0/1 |
-| `karar_no` | Karar sırası | 1, 2, 3 |
-| `ilk_tiklama_sn` | Karar ekranı açıldıktan sonra ilk seçime kadar geçen süre | saniye |
+| `oturum` | Rastgele oturum kimliği (ad, e-posta, cihaz kimliği yok) | metin |
+| `sahne_no` | Karar sırası | 1, 2, 3 |
+| `seviye` | "Yeni başladım" 0, "Deneyimliyim" 1 | 0/1 |
+| `karar_suresi_sn` | Karar ekranı açıldıktan sonra kararın kesinleşmesine kadar geçen süre | saniye |
 | `onceki_yanlis_sayisi` | Önceki kararlarda sistemi çökerten ya da KVKK ihlali yaratan seçim sayısı | adet |
-| `onceki_takildi` | Önceki karar için etiket (takıldı mı) | 0/1 (ilk karar için 0) |
-| `ipucu_sayisi_once` | Bu karardan önce "İpucu iste" düğmesine basılma sayısı | adet |
+| `ipucu_sayisi` | Bu karardan önce "İpucu iste" düğmesine basılma sayısı | adet |
+| `ilk_tiklama_sn` | Karar ekranı açıldıktan sonra ilk seçime kadar geçen süre | saniye |
+| `onceki_ipucu_gerekti` | Önceki karar için etiket (ilk karar için 0) | 0/1 |
+| `ipucu_gerekti` | Hedef etiket (bkz. 8.3) | 0/1 |
+| `kaynak` | `gercek` veya `sentetik` | metin |
+
+Model girdisi: `seviye`, `sahne_no`, `karar_suresi_sn`, `onceki_yanlis_sayisi`, `ipucu_sayisi`, `ilk_tiklama_sn`, `onceki_ipucu_gerekti`. Etiket `ipucu_gerekti`. Etiketle sızıntı olmaması için "Geri al" ve tutora yazılan soru girdi olarak kullanılmaz.
 
 ### 8.3 Etiket (hedef)
 
-`takildi = 1`, o kararda oyuncu "Geri al" kullandıysa **veya** tutora soru yazdıysa. Aksi halde `0`.
+`ipucu_gerekti = 1`, o kararda oyuncu "Geri al" kullandıysa **veya** tutora soru yazdıysa. Aksi halde `0`. Bu, oyuncunun yardım ihtiyacının gözlenebilir bir göstergesidir.
 
 ### 8.4 Veri
 
@@ -207,7 +213,7 @@ Her özellik karar ekranı açıldığında bilinen bilgilerden hesaplanır. Eti
 - **Kabul eşiği:** ortalama ROC-AUC ≥ **0,70**. Ayrıca dengeli doğruluk (balanced accuracy) çoğunluk sınıfı tahmininden (0,50) yüksek olmalı.
 - **Eşdeğerlik:** `model.onnx` ile sklearn arasındaki en büyük olasılık farkı ≤ **1e-4**.
 - **Tarayıcı paritesi:** Python referans olasılığı ile tarayıcıdaki `onnxruntime-web` olasılığı arasındaki fark ≤ **1e-4** (5 referans girdide).
-- **Eşik olasılığı:** `takildi` tahmini ≥ **0,50** ise "Yardım modu" açılır.
+- **Eşik olasılığı:** `ipucu_gerekti` tahmini ≥ **0,50** ise "Yardım modu" açılır.
 
 ### 8.6 Model kabul örnekleri
 
@@ -217,7 +223,7 @@ Her özellik karar ekranı açıldığında bilinen bilgilerden hesaplanır. Eti
 - O zaman: Betik hata verir, `model/` klasörüne dosya yazılmaz ve yayın adımı çalışmaz.
 
 **AK-7 · Model kararı oyunu değiştirir**
-- Verilen: Oyuncunun `takildi` tahmini ≥ 0,50 olur.
+- Verilen: Oyuncunun `ipucu_gerekti` tahmini ≥ 0,50 olur.
 - Ne zaman: Bir sonraki karar ekranı açılır.
 - O zaman: Tutor, o kararla ilgili somut bir ipucu verir ve Deneyimliyim modunda sayaç görünmez. Tahmin 0,50'nin altındaysa bu değişiklikler olmaz.
 

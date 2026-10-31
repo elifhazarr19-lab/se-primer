@@ -1,0 +1,12 @@
+# SE Primer v2: model eğitimi ve Python referans tüketicisi
+# Python 3.14 ile test edildi (scikit-learn 1.9.1 ve skl2onnx 1.20.0 bu sürümlerde doğrulandı).
+# Kurulum:
+#   python -m venv .venv
+#   .venv\Scripts\pip install -r requirements.txt     (macOS/Linux: .venv/bin/pip)
+scikit-learn==1.9.1
+skl2onnx==1.20.0
+onnx
+onnxruntime
+pandas
+numpy
+huggingface_hub

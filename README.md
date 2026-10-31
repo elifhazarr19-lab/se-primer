@@ -14,6 +14,8 @@ SE Primer, sağlık sektöründe geçen bir kriz senaryosunu (sabah 08:00'de ç�
 - **Tutor değerlendirmesi:** [eval/](eval/)
 - **Yayın testi:** [test/yayinlanan_uygulama_testi.md](test/yayinlanan_uygulama_testi.md)
 - **Demo videosu (56 sn):** [test/demo.mp4](test/demo.mp4)
+- **Model (v2) HF reposu:** `elifhazarr06/se-primer-takilma` (yayınlanınca bağlantı buraya eklenecek, commit'li adres [RELEASE.md](RELEASE.md) içinde)
+- **Veri sözlüğü:** [data/SOZLUK.md](data/SOZLUK.md) · **Sınav tasarımı:** [SINAV_TASARIMI.md](SINAV_TASARIMI.md)
 
 ## Mimari
 
@@ -53,6 +55,48 @@ Videolar `cypress/videos/` klasörüne kaydedilir.
 **Windows notu:** Proje yolunda ASCII olmayan karakter (ör. `İ`) varsa Cypress takılabiliyor. Bu durumda projeyi `C:\se-primer` gibi ASCII bir yola kopyalayıp orada çalıştırın. Testler Chrome ile çalıştırıldığında `npm test -- --browser chrome` kullanılabilir.
 
 **Son sonuç:** 9 testten 9'u geçti (Node 22.23.4, Chrome 156, Cypress 13.17.0). Testler üç kararın 8 kombinasyonunu (4 farklı son) ve Deneyimliyim süre yolunu kapsar. Süre yaklaşık 2,5 dakika.
+
+## Model (v2): takılma tahmini
+
+Oyuncunun karar davranışından `ipucu_gerekti` olasılığını tahmin eden küçük bir model. Olasılık
+0,50 ve üzerindeyse bir sonraki karar ekranında somut ipucu gösterilir (spec §8).
+
+**Kurulum ve eğitim (3 komut, Python 3.14):**
+
+```bash
+python -m venv .venv
+.venv\Scripts\pip install -r requirements.txt
+.venv\Scripts\python train.py
+```
+
+macOS/Linux için `.venv/bin/pip` ve `.venv/bin/python` kullanın.
+
+`train.py` tek komutla şunları yapar: 5 katlı çapraz doğrulama, eval kapısı, ONNX dışa aktarımı
+ve ONNX ↔ sklearn eşdeğerlik kontrolü. Eşik altında kalan model `model/` klasörüne yazılmaz.
+
+| Dosya | Ne |
+|---|---|
+| [data/oturumlar.csv](data/oturumlar.csv) | Karar satırları (`kaynak`: `gercek` veya `sentetik`) |
+| [data/SOZLUK.md](data/SOZLUK.md) | Her sütunun tanımı ve sentetik üreticinin kuralı |
+| [scripts/uret_sentetik.py](scripts/uret_sentetik.py) | Sentetik oturum üretici (tohum 13) |
+| [train.py](train.py) | Eğitim ve eval kapısı |
+| [model/](model/) | `model.onnx`, `config.json` (sözleşme), `README.md` (model kartı) |
+| [tests/parite.py](tests/parite.py) → [tests/parite.json](tests/parite.json) | Python referans olasılıkları (5 girdi) |
+| [cypress/e2e/parite.cy.js](cypress/e2e/parite.cy.js) | Tarayıcı ↔ Python parite testi (tolerans 1e-4) |
+| [RELEASE.md](RELEASE.md) | Yayın kontrol listesi, commit'e sabit URL, geri alma, ödünleşim matrisi |
+
+**Durum:** Eğitim hattı çalışıyor. Model yayında değil: gerçek oturum sayısı kontrol listesindeki
+hedefin (15) altında. Şu ana kadar veri sentetik; bu sayılar yalnızca eğitim hattının çalıştığını
+gösterir.
+
+**Parite referansı (Python):** `.venv\Scripts\python tests\parite.py`
+
+## Yapay zekâ araçlarının kullanımı
+
+- **Google AI Studio (Gemini):** Oyunun akışı ve Sokratik tutor ([system_prompt.md](system_prompt.md)); Build uygulaması.
+- **Claude Code (Anthropic):** `train.py`, `scripts/uret_sentetik.py`, `tests/parite.py`, Cypress testleri ve bu dokümanların ilk taslakları. `train.py`, `scripts/uret_sentetik.py` ve `tests/parite.py` çalıştırılarak doğrulandı. Parite testi (`cypress/e2e/parite.cy.js`) henüz uygulamanın yeni sürümünde çalıştırılmadı.
+- **Elle düzeltilenler:** Cypress'teki hatalı varsayımlar (son düğme sırası ve Deneyimliyim doğrulaması) yeniden yazıldı. Tutor kuralına "seçenekleri karşılaştırma yok" maddesi elle eklendi.
+- **Elle belirlenenler:** Eşikler (ROC-AUC 0,70; parite 1e-4), "yanlış seçim" tanımı (B seçeneği) ve sentetik üretici kuralı. Bunlar eğitimden önce spec'te sabitlendi.
 
 ## Yapılmayan üç özellik
 

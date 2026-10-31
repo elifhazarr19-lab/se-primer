@@ -1,0 +1,83 @@
+{
+  "title": "takılma tahmini (ipucu_gerekti)",
+  "surum": "2.0",
+  "aciklama": "Oyuncunun karar ekranındaki davranışından, bir sonraki kararda ipucu gerekip gerekmediğini tahmin eder.",
+  "target": "ipucu_gerekti",
+  "class_labels": {
+    "0": "ipucu gerekmez",
+    "1": "ipucu gerekir"
+  },
+  "classes": [
+    0,
+    1
+  ],
+  "esik": 0.5,
+  "features": [
+    {
+      "name": "seviye",
+      "aciklama": "0 Yeni başladım, 1 Deneyimliyim",
+      "example": 0.0
+    },
+    {
+      "name": "sahne_no",
+      "aciklama": "karar sırası: 1, 2, 3",
+      "example": 1.0
+    },
+    {
+      "name": "karar_suresi_sn",
+      "aciklama": "ekran açılışından seçime kadar geçen süre (sn)",
+      "example": 34.6
+    },
+    {
+      "name": "onceki_yanlis_sayisi",
+      "aciklama": "önceki kararlarda B seçeneği sayısı (adet)",
+      "example": 0.0
+    },
+    {
+      "name": "ipucu_sayisi",
+      "aciklama": "önceki kararlarda \"Emin değil misin?\" açılış sayısı (adet)",
+      "example": 0.0
+    },
+    {
+      "name": "ilk_tiklama_sn",
+      "aciklama": "ekran açılışından ilk seçime kadar geçen süre (sn)",
+      "example": 13.3
+    },
+    {
+      "name": "onceki_ipucu_gerekti",
+      "aciklama": "önceki karar için etiket (ilk karar için 0)",
+      "example": 0.0
+    }
+  ],
+  "metrics": {
+    "cv_roc_auc_ortalama": 0.8252,
+    "cv_roc_auc_katlar": [
+      0.837,
+      0.7556,
+      0.8963,
+      0.7926,
+      0.8444
+    ],
+    "cv_dengeli_dogruluk": 0.7133,
+    "esik_roc_auc": 0.7,
+    "esik_dengeli_dogruluk": 0.5
+  },
+  "veri": {
+    "satir": 120,
+    "oturum": 40,
+    "pozitif": 45,
+    "negatif": 75,
+    "gercek_satir": 0,
+    "sentetik_satir": 120,
+    "gercek_oturum": 0
+  },
+  "veri_sha256": "e8021cc7f95dbbe362e1c70d090f37ae43298943f76c0d3a065aef4d5c540212",
+  "yayin_hazir": false,
+  "onnx_sklearn_fark": 7.512224464711892e-08,
+  "onnx_sha256": "fce332014a54534f250c65d1b80c8ae9566c943f5033eb61ebddd72f725d8f1a",
+  "seed": 13,
+  "sklearn_version": "1.9.1",
+  "skl2onnx_version": "1.20.0",
+  "onnxruntime_version": "1.31.1",
+  "python_version": "3.14"
+}

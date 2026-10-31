@@ -178,6 +178,8 @@ Bu bölüm model gereksinimini, eval metriğini ve kabul eşiğini içerir. Eşi
 
 Oyuncu bu karar ekranında takılacak mı? Model, oyuncunun davranışından bu olasılığı tahmin eder. Olasılık eşiği geçerse oyunun davranışı değişir: tutor daha somut bir ipucu verir ve Deneyimliyim modunda 60 saniyelik sayaç kalkar ("Yardım modu").
 
+**Zamanlama:** Model, bir karar kesinleştiğinde (3 sn "Geri al" bandı bittiğinde) o kararın satırı üzerinde çalışır. Sonuç, **bir sonraki karar ekranında** uygulanır (AK-7). Bu sayede modelin gördüğü girdiler, eğitimdeki satırların tanımıyla aynıdır: süreler kesinleşmiş, etiket o karar için bilinmektedir.
+
 ### 8.2 Girdi (özellikler) ve veri sütunları
 
 Veri dosyası `data/oturumlar.csv` aşağıdaki sütunları taşır. Her satır bir karar ekranıdır. Ödev şablonundaki sütun adları korunmuştur.
@@ -188,8 +190,8 @@ Veri dosyası `data/oturumlar.csv` aşağıdaki sütunları taşır. Her satır 
 | `sahne_no` | Karar sırası | 1, 2, 3 |
 | `seviye` | "Yeni başladım" 0, "Deneyimliyim" 1 | 0/1 |
 | `karar_suresi_sn` | Karar ekranı açıldıktan sonra kararın kesinleşmesine kadar geçen süre | saniye |
-| `onceki_yanlis_sayisi` | Önceki kararlarda sistemi çökerten ya da KVKK ihlali yaratan seçim sayısı | adet |
-| `ipucu_sayisi` | Bu karardan önce "İpucu iste" düğmesine basılma sayısı | adet |
+| `onceki_yanlis_sayisi` | Bu karardan önce verilen B seçeneği sayısı (karar 1, 2, 3 için B = kötü seçenek) | adet |
+| `ipucu_sayisi` | Bu karardan önce "Emin değil misin?" (tutor) düğmesinin açılış sayısı | adet |
 | `ilk_tiklama_sn` | Karar ekranı açıldıktan sonra ilk seçime kadar geçen süre | saniye |
 | `onceki_ipucu_gerekti` | Önceki karar için etiket (ilk karar için 0) | 0/1 |
 | `ipucu_gerekti` | Hedef etiket (bkz. 8.3) | 0/1 |
